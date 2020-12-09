@@ -101,7 +101,7 @@ $('#load-more').click((e) => {
 async function fetchAsync (username, page = 1) {
     $('.loader').css('display', 'block')
 
-    let response = await fetch(`https://api.github.com/users/${username}/received_events?page=${page}`)
+    let response = await fetch(`https://api.github.com/users/${username}/events?page=${page}`)
     let data = await response.json()
     return data
 }
