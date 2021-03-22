@@ -55,7 +55,24 @@ function getEventType (type, payload) {
             break
         case 'PushEvent':
             event = 'pushed a commit'
-            break;
+            break
+        case 'IssueEvent':
+            event = `${payload.action} an issue in`
+            break
+        case 'IssueCommentEvent':
+            event = `${payload.action} a <a href="${payload.comment.html_url}" class="link">comment</a> on
+                       an <a href="${payload.pull_request.html_url}" class="link">issue</a> in`
+            break
+        case 'PullRequestEvent':
+            event = `${payload.action} a pull request in`
+            break
+        case 'ReleaseEvent':
+            event = `${payload.action} a release ${payload.version} for`
+            break
+        case 'PullRequestReviewCommentEvent':
+            event = `created a <a href="${payload.comment.html_url}" class="link">comment</a> on 
+                        a <a href="${payload.pull_request.html_url}" class="link">pull request</a> in`
+            break
         default:
             event = ''
     }
