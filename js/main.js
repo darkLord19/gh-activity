@@ -36,7 +36,7 @@ function getItems (username) {
 
 function getEventType (type, payload) {
     let event = ''
-    console.log(type, payload)
+
     switch(type) {
         case 'WatchEvent':
             event = 'starred'
