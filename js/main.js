@@ -36,7 +36,7 @@ function getItems (username) {
 
 function getEventType (type, payload) {
     let event = ''
-
+    console.log(type, payload)
     switch(type) {
         case 'WatchEvent':
             event = 'starred'
@@ -48,7 +48,14 @@ function getEventType (type, payload) {
             event = 'made public'
             break
         case 'CreateEvent':
-            event = 'created a repository'
+            if (payload.ref_type == 'repository') {
+                event = `created a ${payload.ref_type}`
+            } else {
+                event = `created a ${payload.ref_type} ${payload.ref} in` 
+            }
+            break
+        case 'DeleteEvent':
+            event = `deleted a ${payload.ref_type} from`
             break
         case 'PullRequestEvent':
             event = 'opened a pull request in'
@@ -56,8 +63,8 @@ function getEventType (type, payload) {
         case 'PushEvent':
             event = 'pushed a commit'
             break
-        case 'IssueEvent':
-            event = `${payload.action} an issue in`
+        case 'IssuesEvent':
+            event = `${payload.action} an <a href="${payload.issue.html_url}" class="link">issue</a> in`
             break
         case 'IssueCommentEvent':
             event = `${payload.action} a <a href="${payload.comment.html_url}" class="link">comment</a> on
@@ -73,6 +80,9 @@ function getEventType (type, payload) {
             event = `created a <a href="${payload.comment.html_url}" class="link">comment</a> on 
                         a <a href="${payload.pull_request.html_url}" class="link">pull request</a> in`
             break
+        case 'PullRequestReviewEvent':
+            event = `${payload.action} a <a href="${payload.pull_request.html_url}" class="link">pull request</a> in`
+            break 
         default:
             event = ''
     }
